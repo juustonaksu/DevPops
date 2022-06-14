@@ -4,7 +4,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
-import {Fill, RegularShape, Stroke, Style} from 'ol/style';
+import {Text, Fill, RegularShape, Stroke, Style} from 'ol/style';
 import GeoJSON from 'ol/format/GeoJSON';
 import Overlay from 'ol/Overlay';
 import Point from 'ol/geom/Point';
@@ -70,19 +70,33 @@ const trackLayer = new VectorLayer({
   source: trackSource
 });
 
+function trainStyleFunction(feature) {
+return new Style({
+  image: new CircleStyle({
+      fill: new Fill({color: 'white'}),
+      stroke: new Stroke({color: 'lime', width: 3}),
+      radius: 15
+    }),
+  text: new Text({
+    text: feature.get('name').toString(),
+    fill: new Fill({
+      color: "#000000"
+    }),
+    stroke: new Stroke({
+      color: "#ffffff",
+      width: 3
+    }),
+  }) 
+})
+}
+
 const trainSource = new VectorSource({
   format: new GeoJSON(),
 })
 
 const trainLayer = new VectorLayer({
   source: trainSource,
-  style: new Style({
-    image: new CircleStyle({
-      fill: new Fill({color: 'white'}),
-      stroke: new Stroke({color: 'lime', width: 2}),
-      radius: 10
-    }),
-  }),
+  style: trainStyleFunction
 });
 
 const map = new Map({
