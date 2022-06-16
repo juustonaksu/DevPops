@@ -278,5 +278,3 @@ if (!navigator.geolocation) {
     console.log('Locating…');
     navigator.geolocation.getCurrentPosition(success, error);
 }
-
-//some change
